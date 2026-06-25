@@ -187,6 +187,15 @@
                                 The icon is always auto-detected regardless of this setting.
                             </div>
                         </div>
+                        <div class="inputContainer">
+                            <label class="inputLabel inputLabelUnfocused" for="SeerrApiKey">Seerr API Key</label>
+                            <input type="password" id="SeerrApiKey" is="emby-input" placeholder="Enter your Seerr API key" autocomplete="off" />
+                            <div class="fieldDescription">
+                                <strong>Server-side bootstrap credential.</strong>
+                                Used only by the Luna plugin when a Jellyfin-authenticated user opens Seerr through Moonfin.
+                                The key is sent from Jellyfin to Seerr server-to-server and is not exposed to Moonfin clients.
+                            </div>
+                        </div>
                         <div style="background-color: rgba(0, 164, 220, 0.1); border-left: 4px solid #00a4dc; border-radius: 4px; padding: 1em 1.5em; margin: 1em 0;">
                             <strong>SSO Proxy:</strong> When Seerr is enabled, Moonfin provides single sign-on.
                             Users authenticate once with their Jellyfin credentials, and the session is stored server-side.
@@ -1499,6 +1508,7 @@
                     document.querySelector('#SeerrEnabled').checked = config.SeerrEnabled;
                     document.querySelector('#SeerrUrl').value = config.SeerrUrl || '';
                     document.querySelector('#SeerrDisplayName').value = config.SeerrDisplayName || '';
+                    document.querySelector('#SeerrApiKey').value = config.SeerrApiKey || '';
                     document.querySelector('#MdblistApiKey').value = config.MdblistApiKey || '';
                     document.querySelector('#TmdbApiKey').value = config.TmdbApiKey || '';
                     document.querySelector('#WebDefaultServerUrl').value = config.WebDefaultServerUrl || '';
@@ -1688,6 +1698,7 @@
                         config.SeerrEnabled = document.querySelector('#SeerrEnabled').checked;
                         config.SeerrUrl = document.querySelector('#SeerrUrl').value || null;
                         config.SeerrDisplayName = document.querySelector('#SeerrDisplayName').value || null;
+                        config.SeerrApiKey = document.querySelector('#SeerrApiKey').value || null;
                         config.MdblistApiKey = document.querySelector('#MdblistApiKey').value || null;
                         config.TmdbApiKey = document.querySelector('#TmdbApiKey').value || null;
                         config.WebDefaultServerUrl = document.querySelector('#WebDefaultServerUrl').value || null;
