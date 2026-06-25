@@ -19,10 +19,46 @@ namespace Moonfin.Server.Api;
 public class SeerrProxyController : ControllerBase
 {
     private readonly SeerrSessionService _sessionService;
+    private readonly LunaJellyfinUserResolver _lunaUserResolver;
 
-    public SeerrProxyController(SeerrSessionService sessionService)
+    public SeerrProxyController(SeerrSessionService sessionService, LunaJellyfinUserResolver lunaUserResolver)
     {
         _sessionService = sessionService;
+        _lunaUserResolver = lunaUserResolver;
+    }
+
+    /// <summary>
+    /// LUNA-PROVENANCE:
+    /// Source pattern: existing Moonfin Seerr status/login endpoints plus LunaJellyfinUserResolver.
+    /// Reason: first non-invasive bootstrap probe; verifies Jellyfin-authenticated identity
+    /// before adding Seerr server-to-server session bootstrap.
+    /// Change type: new Luna endpoint stub.
+    /// </summary>
+    [HttpPost("Bootstrap")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public ActionResult<object> Bootstrap()
+    {
+        var userId = _lunaUserResolver.GetUserIdFromClaims(User);
+        if (userId == null)
+        {
+            return Unauthorized(new { Error = "User not authenticated" });
+        }
+
+        var jellyfinUser = _lunaUserResolver.ResolveUserById(HttpContext, userId.Value);
+        if (jellyfinUser == null)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "Unable to resolve Jellyfin user" });
+        }
+
+        return Ok(new
+        {
+            JellyfinUserId = userId.Value,
+            JellyfinUsername = _lunaUserResolver.TryGetUserName(jellyfinUser),
+            BootstrapReady = false
+        });
     }
 
     /// <summary>
@@ -32,6 +68,7 @@ public class SeerrProxyController : ControllerBase
     /// </summary>
     /// <param name="request">Jellyfin credentials for Seerr auth.</param>
     /// <returns>Authentication result with Seerr user info.</returns>
+
     [HttpPost("Login")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
