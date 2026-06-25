@@ -39,25 +39,44 @@ public class SeerrProxyController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<object> Bootstrap()
+    public async Task<IActionResult> Bootstrap()
     {
         var userId = _lunaUserResolver.GetUserIdFromClaims(User);
         if (userId == null)
         {
-            return Unauthorized(new { Error = "User not authenticated" });
+            return Unauthorized(new { error = "User not authenticated" });
         }
 
         var jellyfinUser = _lunaUserResolver.ResolveUserById(HttpContext, userId.Value);
         if (jellyfinUser == null)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "Unable to resolve Jellyfin user" });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Unable to resolve Jellyfin user" });
+        }
+
+        var jellyfinUsername = _lunaUserResolver.TryGetUserName(jellyfinUser);
+        if (string.IsNullOrWhiteSpace(jellyfinUsername))
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Unable to resolve Jellyfin username" });
+        }
+
+        var result = await _sessionService.BootstrapWithLunaAsync(userId.Value, jellyfinUsername);
+        if (result == null || !result.Success)
+        {
+            return Unauthorized(new
+            {
+                error = result?.Error ?? "Luna bootstrap failed",
+                success = false
+            });
         }
 
         return Ok(new
         {
-            JellyfinUserId = userId.Value,
-            JellyfinUsername = _lunaUserResolver.TryGetUserName(jellyfinUser),
-            BootstrapReady = false
+            success = true,
+            seerrUserId = result.SeerrUserId,
+            jellyseerrUserId = result.SeerrUserId,
+            displayName = result.DisplayName,
+            avatar = result.Avatar,
+            permissions = result.Permissions
         });
     }
 

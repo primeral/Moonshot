@@ -25,6 +25,13 @@ public class PluginConfiguration : BasePluginConfiguration
     public string? SeerrUrl { get; set; }
 
     /// <summary>
+    /// Seerr API key used only for server-to-server Luna session bootstrap.
+    /// This lets the Jellyfin plugin create a Seerr session after Jellyfin has
+    /// already authenticated the user, without asking the user for Seerr credentials.
+    /// </summary>
+    public string? SeerrApiKey { get; set; }
+
+    /// <summary>
     /// Optional display name override (e.g., "Requests", "Media Requests").
     /// Leave empty to auto-detect based on server version.
     /// </summary>

@@ -357,6 +357,98 @@ public class SeerrSessionService
         }
     }
 
+      /// <summary>
+      /// LUNA-PROVENANCE: New Luna method based on AuthenticateAsync cookie capture.
+      /// It converts a Jellyfin-authenticated identity into a stored Seerr session by
+      /// calling Seerr QC+/Luna /api/v1/auth/jellyfin/luna/bootstrap.
+      /// </summary>
+      public async Task<SeerrAuthResult?> BootstrapWithLunaAsync(Guid userId, string jellyfinUsername)
+      {
+          var config = MoonfinPlugin.Instance?.Configuration;
+          var seerrUrl = config?.GetEffectiveSeerrUrl();
+          var seerrApiKey = config?.SeerrApiKey;
+
+          if (string.IsNullOrEmpty(seerrUrl) || string.IsNullOrWhiteSpace(seerrApiKey))
+          {
+              return new SeerrAuthResult
+              {
+                  Success = false,
+                  Error = string.IsNullOrEmpty(seerrUrl) ? "Seerr URL not configured" : "Seerr API key not configured"
+              };
+          }
+
+          try
+          {
+              var cookieContainer = new CookieContainer();
+              using var handler = new HttpClientHandler
+              {
+                  CookieContainer = cookieContainer,
+                  UseCookies = true,
+                  AllowAutoRedirect = false
+              };
+              using var client = new HttpClient(handler);
+              client.Timeout = TimeSpan.FromSeconds(15);
+              client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Luna-Server");
+              client.DefaultRequestHeaders.TryAddWithoutValidation("X-API-Key", seerrApiKey);
+
+              var payload = new
+              {
+                  jellyfinUserId = userId.ToString("D"),
+                  jellyfinUsername
+              };
+
+              var response = await client.PostAsync(
+                  seerrUrl + "/api/v1/auth/jellyfin/luna/bootstrap",
+                  new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+
+              if (!response.IsSuccessStatusCode)
+              {
+                  var errorBody = await response.Content.ReadAsStringAsync();
+                  _logger.LogWarning("Luna bootstrap failed for Jellyfin user {UserId}: {Status} - {Error}",
+                      userId, response.StatusCode, errorBody);
+                  return new SeerrAuthResult { Success = false, Error = "Luna bootstrap failed" };
+              }
+
+              var sessionCookie = ReadSessionCookie(response, cookieContainer, seerrUrl);
+              if (string.IsNullOrEmpty(sessionCookie))
+              {
+                  return new SeerrAuthResult { Success = false, Error = "No session cookie received from Seerr" };
+              }
+
+              var responseBody = await response.Content.ReadAsStringAsync();
+              var userInfo = JsonSerializer.Deserialize<JsonElement>(responseBody);
+
+              var session = new SeerrSession
+              {
+                  JellyfinUserId = userId,
+                  SessionCookie = sessionCookie,
+                  SeerrUserId = userInfo.TryGetProperty("id", out var idProp) ? idProp.GetInt32() : 0,
+                  Username = jellyfinUsername,
+                  DisplayName = userInfo.TryGetProperty("displayName", out var dnProp) ? dnProp.GetString() : jellyfinUsername,
+                  Avatar = userInfo.TryGetProperty("avatar", out var avProp) ? avProp.GetString() : null,
+                  Permissions = userInfo.TryGetProperty("permissions", out var permProp) ? permProp.GetInt32() : 0,
+                  CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                  LastValidated = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+              };
+
+              await SaveSessionAsync(session);
+
+              return new SeerrAuthResult
+              {
+                  Success = true,
+                  SeerrUserId = session.SeerrUserId,
+                  DisplayName = session.DisplayName,
+                  Avatar = session.Avatar,
+                  Permissions = session.Permissions
+              };
+          }
+          catch (Exception ex)
+          {
+              _logger.LogError(ex, "Unexpected error during Luna bootstrap for Jellyfin user {UserId}", userId);
+              return new SeerrAuthResult { Success = false, Error = "An unexpected error occurred" };
+          }
+      }
+
     /// <summary>
     /// Gets the stored session for a user, optionally validating it.
     /// </summary>
