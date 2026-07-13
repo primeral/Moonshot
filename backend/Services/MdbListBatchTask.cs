@@ -270,12 +270,12 @@ public class MdbListBatchTask : IScheduledTask
     {
         yield return new TaskTriggerInfo
         {
-            Type = TaskTriggerInfo.TriggerStartup
+            Type = TaskTriggerInfoType.StartupTrigger
         };
 
         yield return new TaskTriggerInfo
         {
-            Type = TaskTriggerInfo.TriggerDaily,
+            Type = TaskTriggerInfoType.DailyTrigger,
             TimeOfDayTicks = TimeSpan.FromHours(3).Ticks
         };
     }

@@ -74,7 +74,7 @@ public class FileTransformationStartupService : IScheduledTask
     {
         yield return new TaskTriggerInfo
         {
-            Type = TaskTriggerInfo.TriggerStartup
+            Type = TaskTriggerInfoType.StartupTrigger
         };
     }
 }

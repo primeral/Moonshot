@@ -5,8 +5,8 @@
 
 set -e
 
-VERSION="${1:-1.9.1.0}"
-TARGET_ABI="${2:-10.10.0}"
+VERSION="${1:-1.9.1.2}"
+TARGET_ABI="${2:-12.0.0}"
 BUILD_TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
 # Get repo root (where this script lives)
@@ -50,7 +50,7 @@ rm -rf "$RELEASE_DIR"
 mkdir -p "$RELEASE_DIR"
 
 # Copy DLL to release folder
-cp "$BACKEND_DIR/bin/Release/net8.0/Moonfin.Server.dll" "$RELEASE_DIR/"
+cp "$BACKEND_DIR/bin/Release/net10.0/Moonfin.Server.dll" "$RELEASE_DIR/"
 
 # Bundle Flutter web files next to plugin DLL for local/sideload installs
 if [ -f "$FRONTEND_DIR/index.html" ]; then
