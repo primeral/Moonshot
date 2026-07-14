@@ -5,7 +5,7 @@
 
 set -e
 
-VERSION="${1:-1.9.1.2}"
+VERSION="${1:-1.9.1.3}"
 TARGET_ABI="${2:-12.0.0}"
 BUILD_TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
