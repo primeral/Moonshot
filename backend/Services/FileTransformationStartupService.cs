@@ -14,7 +14,7 @@ namespace Moonfin.Server.Services;
 /// </summary>
 public class FileTransformationStartupService : IScheduledTask
 {
-    public string Name => "Moonfin Startup";
+    public string Name => "Moonshot Startup";
     public string Key => "Moonfin.Server.Startup";
     public string Description => "Manually registers Moonfin's file transformations. Normally runs automatically - use this only if the header entrypoint injection didn't load.";
     public string Category => "Startup Services";
@@ -28,7 +28,7 @@ public class FileTransformationStartupService : IScheduledTask
 
     public Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Moonfin Startup: Registering file transformations.");
+        _logger.LogInformation("Moonshot Startup: Registering file transformations.");
 
         var payload = new JObject
         {
@@ -46,7 +46,7 @@ public class FileTransformationStartupService : IScheduledTask
         if (ftAssembly == null)
         {
             _logger.LogWarning(
-                "Moonfin: File Transformation plugin not found. Header entrypoint injection is disabled. " +
+                "Moonshot: File Transformation plugin not found. Header entrypoint injection is disabled. " +
                 "Install from https://github.com/IAmParadox27/jellyfin-plugin-file-transformation");
             return Task.CompletedTask;
         }
@@ -57,7 +57,7 @@ public class FileTransformationStartupService : IScheduledTask
         if (pluginInterfaceType == null)
         {
             _logger.LogWarning(
-                "Moonfin: File Transformation PluginInterface type not available. " +
+                "Moonshot: File Transformation PluginInterface type not available. " +
                 "Ensure File Transformation plugin is v2.2.1.0 or later.");
             return Task.CompletedTask;
         }
@@ -65,7 +65,7 @@ public class FileTransformationStartupService : IScheduledTask
         pluginInterfaceType.GetMethod("RegisterTransformation")
             ?.Invoke(null, new object?[] { payload });
 
-        _logger.LogInformation("Moonfin: Registered index.html transformation.");
+        _logger.LogInformation("Moonshot: Registered index.html transformation.");
 
         return Task.CompletedTask;
     }

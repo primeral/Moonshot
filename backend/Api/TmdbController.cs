@@ -62,7 +62,7 @@ public class TmdbController : ControllerBase
             return Ok(new TmdbEpisodeRatingResponse
             {
                 Success = false,
-                Error = "No TMDB API key configured. Add your key in Moonfin Settings, or ask your server admin to set a server-wide key."
+                Error = "No TMDB API key configured. Add your key in Moonshot Settings, or ask your server admin to set a server-wide key."
             });
         }
 
@@ -160,7 +160,7 @@ public class TmdbController : ControllerBase
             return Ok(new TmdbSeasonRatingsResponse
             {
                 Success = false,
-                Error = "No TMDB API key configured. Add your key in Moonfin Settings, or ask your server admin to set a server-wide key."
+                Error = "No TMDB API key configured. Add your key in Moonshot Settings, or ask your server admin to set a server-wide key."
             });
         }
 

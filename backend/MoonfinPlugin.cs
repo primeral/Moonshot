@@ -9,7 +9,7 @@ namespace Moonfin.Server;
 
 /// <summary>
 /// Moonfin Server Plugin for Jellyfin.
-/// Provides settings synchronization across Moonfin clients.
+/// Provides settings synchronization across Moonshot clients.
 /// </summary>
 public class MoonfinPlugin : BasePlugin<PluginConfiguration>, IHasWebPages
 {
@@ -35,10 +35,10 @@ public class MoonfinPlugin : BasePlugin<PluginConfiguration>, IHasWebPages
     }
 
     /// <inheritdoc />
-    public override string Name => "Moonfin";
+    public override string Name => "Moonshot";
 
     /// <inheritdoc />
-    public override string Description => "Moonfin brings a modern TV-style UI to Jellyfin web. Features include: custom navbar, media bar with featured content, Seerr integration, and cross-device settings synchronization. Works with Android TV, Roku, Tizen, webOS, and Web clients.";
+    public override string Description => "Moonshot brings a modern TV-style UI to Jellyfin web. Features include: custom navbar, media bar with featured content, Seerr integration, and cross-device settings synchronization. Works with Android TV, Roku, Tizen, webOS, and Web clients.";
 
     /// <inheritdoc />
     public override Guid Id => Guid.Parse("8c5d0e91-4f2a-4b6d-9e3f-1a7c8d9e0f2b");

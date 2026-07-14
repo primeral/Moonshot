@@ -9,7 +9,7 @@ namespace Moonfin.Server;
 public class PluginConfiguration : BasePluginConfiguration
 {
     /// <summary>
-    /// Enable settings sync across Moonfin clients.
+    /// Enable settings sync across Moonshot clients.
     /// </summary>
     public bool EnableSettingsSync { get; set; } = true;
 
@@ -56,17 +56,17 @@ public class PluginConfiguration : BasePluginConfiguration
     public string? TmdbApiKey { get; set; }
 
     /// <summary>
-    /// Optional default server URL shown in the Moonfin web Add Server dialog.
+    /// Optional default server URL shown in the Moonshot web Add Server dialog.
     /// </summary>
     public string? WebDefaultServerUrl { get; set; }
 
     /// <summary>
-    /// Optional forced server URL for Moonfin web plugin mode auto-connect.
+    /// Optional forced server URL for Moonshot web plugin mode auto-connect.
     /// </summary>
     public string? WebForcedServerUrl { get; set; }
 
     /// <summary>
-    /// Enable WebRTC private subnet scan when running Moonfin web plugin mode.
+    /// Enable WebRTC private subnet scan when running Moonshot web plugin mode.
     /// </summary>
     public bool WebEnableWebRtcScan { get; set; } = true;
 

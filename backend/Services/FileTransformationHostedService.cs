@@ -24,7 +24,7 @@ public class FileTransformationHostedService : IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Moonfin: Auto-registering file transformations.");
+        _logger.LogInformation("Moonshot: Auto-registering file transformations.");
 
         try
         {
@@ -58,7 +58,7 @@ public class FileTransformationHostedService : IHostedService
         if (ftAssembly == null)
         {
             _logger.LogWarning(
-                "Moonfin: File Transformation plugin not found. Header entrypoint injection is disabled. " +
+                "Moonshot: File Transformation plugin not found. Header entrypoint injection is disabled. " +
                 "Install from https://github.com/IAmParadox27/jellyfin-plugin-file-transformation");
             return;
         }
@@ -69,7 +69,7 @@ public class FileTransformationHostedService : IHostedService
         if (pluginInterfaceType == null)
         {
             _logger.LogWarning(
-                "Moonfin: File Transformation PluginInterface type not available. " +
+                "Moonshot: File Transformation PluginInterface type not available. " +
                 "Ensure File Transformation plugin is v2.2.1.0 or later.");
             return;
         }
@@ -77,6 +77,6 @@ public class FileTransformationHostedService : IHostedService
         pluginInterfaceType.GetMethod("RegisterTransformation")
             ?.Invoke(null, new object?[] { payload });
 
-        _logger.LogInformation("Moonfin: Successfully registered index.html transformation.");
+        _logger.LogInformation("Moonshot: Successfully registered index.html transformation.");
     }
 }

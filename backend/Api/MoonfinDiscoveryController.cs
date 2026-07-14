@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Moonfin.Server.Api;
 
 /// <summary>
-/// Discovery endpoint used by Moonfin web plugin mode.
+/// Discovery endpoint used by Moonshot web plugin mode.
 /// </summary>
 [ApiController]
 [Route("Moonfin/Discovery")]

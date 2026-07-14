@@ -67,10 +67,10 @@ cat > "$RELEASE_DIR/meta.json" <<EOF
 {
   "category": "General",
   "changelog": "",
-  "description": "Moonfin brings a modern TV-style UI to Jellyfin web. Features include: custom navbar, media bar with featured content, Jellyseerr integration, and cross-device settings synchronization.",
+  "description": "Moonshot brings a modern TV-style UI to Jellyfin web. Features include: custom navbar, media bar with featured content, Jellyseerr integration, and cross-device settings synchronization.",
   "guid": "${PLUGIN_GUID}",
-  "name": "Moonfin",
-  "overview": "Custom UI and settings sync for Jellyfin",
+  "name": "Moonshot",
+  "overview": "Moonshot UI and settings sync for Jellyfin",
   "owner": "RadicalMuffinMan",
   "targetAbi": "${TARGET_ABI}.0",
   "timestamp": "${TIMESTAMP_ISO}",

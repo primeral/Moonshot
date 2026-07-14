@@ -73,7 +73,7 @@ public class MdbListController : ControllerBase
             return Ok(new MdbListResponse
             {
                 Success = false,
-                Error = "No MDBList API key configured. Add your key in Moonfin Settings, or ask your server admin to set a server-wide key."
+                Error = "No MDBList API key configured. Add your key in Moonshot Settings, or ask your server admin to set a server-wide key."
             });
         }
 

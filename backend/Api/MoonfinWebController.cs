@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Moonfin.Server.Api;
 
 /// <summary>
-/// Controller to serve Moonfin web files.
+/// Controller to serve Moonshot web files.
 /// </summary>
 [ApiController]
 [Route("Moonfin/Web")]
@@ -49,7 +49,7 @@ public class MoonfinWebController : ControllerBase
     }
 
     /// <summary>
-    /// Legacy entrypoint redirect to Moonfin web app.
+    /// Legacy entrypoint redirect to Moonshot web app.
     /// </summary>
     [HttpGet("plugin.js")]
     [AllowAnonymous]
@@ -64,7 +64,7 @@ public class MoonfinWebController : ControllerBase
     }
 
     /// <summary>
-    /// Legacy entrypoint redirect to Moonfin web app.
+    /// Legacy entrypoint redirect to Moonshot web app.
     /// </summary>
     [HttpGet("plugin.css")]
     [AllowAnonymous]
@@ -96,7 +96,7 @@ public class MoonfinWebController : ControllerBase
     }
 
     /// <summary>
-    /// Serves runtime config consumed by Moonfin web plugin mode.
+    /// Serves runtime config consumed by Moonshot web plugin mode.
     /// </summary>
     [HttpGet("config.json")]
     [AllowAnonymous]
@@ -124,7 +124,7 @@ public class MoonfinWebController : ControllerBase
     }
 
     /// <summary>
-    /// Serves Moonfin web static files from disk with index fallback for SPA routes.
+    /// Serves Moonshot web static files from disk with index fallback for SPA routes.
     /// </summary>
     [HttpGet("{**path}")]
     [AllowAnonymous]
@@ -135,7 +135,7 @@ public class MoonfinWebController : ControllerBase
         var webRoot = ResolveWebRoot();
         if (string.IsNullOrWhiteSpace(webRoot) || !Directory.Exists(webRoot))
         {
-            return NotFound(new { Error = "Moonfin web root not found", Path = webRoot });
+            return NotFound(new { Error = "Moonshot web root not found", Path = webRoot });
         }
 
         var requestedPath = string.IsNullOrWhiteSpace(path) ? "index.html" : path;
@@ -182,7 +182,7 @@ public class MoonfinWebController : ControllerBase
         var indexPath = Path.Combine(webRoot, "index.html");
         if (!System.IO.File.Exists(indexPath))
         {
-            return NotFound(new { Error = "Moonfin web entrypoint missing", Path = indexPath });
+            return NotFound(new { Error = "Moonshot web entrypoint missing", Path = indexPath });
         }
 
         return ServeIndexHtml(indexPath);
