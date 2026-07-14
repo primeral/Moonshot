@@ -16,7 +16,7 @@ public class FileTransformationStartupService : IScheduledTask
 {
     public string Name => "Moonshot Startup";
     public string Key => "Moonfin.Server.Startup";
-    public string Description => "Manually registers Moonfin's file transformations. Normally runs automatically - use this only if the header entrypoint injection didn't load.";
+    public string Description => "Manually registers Moonshot's file transformations. Normally runs automatically - use this only if the header entrypoint injection didn't load.";
     public string Category => "Startup Services";
 
     private readonly ILogger<FileTransformationStartupService> _logger;

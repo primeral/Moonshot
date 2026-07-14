@@ -64,7 +64,7 @@ public class SeerrProxyController : ControllerBase
         {
             return Unauthorized(new
             {
-                error = result?.Error ?? "Luna bootstrap failed",
+                error = result?.Error ?? "Moonshot bootstrap failed",
                 success = false
             });
         }

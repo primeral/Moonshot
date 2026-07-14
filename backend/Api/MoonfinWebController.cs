@@ -111,7 +111,7 @@ public class MoonfinWebController : ControllerBase
             defaultServerUrl = ResolveDefaultServerUrl(config?.WebDefaultServerUrl, runtimeBaseUrl),
             discoveryProxyUrl = ResolveDiscoveryProxyUrl(runtimeBaseUrl),
             enableWebRtcScan = config?.WebEnableWebRtcScan ?? true,
-            brandingName = "Moonfin",
+            brandingName = "Moonshot",
             pluginMode = true,
             forcedServerUrl = NormalizeConfiguredServerUrl(config?.WebForcedServerUrl)
         };

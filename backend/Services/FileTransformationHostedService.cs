@@ -32,7 +32,7 @@ public class FileTransformationHostedService : IHostedService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Moonfin: Failed to auto-register file transformations.");
+            _logger.LogError(ex, "Moonshot: Failed to auto-register file transformations.");
         }
 
         return Task.CompletedTask;

@@ -159,7 +159,7 @@ public class SeerrSessionService
                 StatusCode = 502,
                 Body = JsonSerializer.SerializeToUtf8Bytes(new
                 {
-                    error = "Seerr redirected the request. Verify the Seerr URL in Moonfin matches its public " +
+                    error = "Seerr redirected the request. Verify the Seerr URL in Moonshot matches its public " +
                             "address (scheme + sub-path), or bypass any reverse-proxy auth for the media server.",
                     code = "UPSTREAM_REDIRECT",
                     location
@@ -270,12 +270,12 @@ public class SeerrSessionService
             {
                 _logger.LogWarning(
                     "Seerr auth redirected ({Status} -> {Location}) for user {Username}. " +
-                    "Check the Seerr URL configured in Moonfin matches the public address (scheme + sub-path).",
+                    "Check the Seerr URL configured in Moonshot matches the public address (scheme + sub-path).",
                     response.StatusCode, response.Headers.Location?.ToString(), username);
                 return new SeerrAuthResult
                 {
                     Success = false,
-                    Error = "Seerr redirected the login request. Verify the Seerr URL in Moonfin matches its public address (https and any sub-path)."
+                    Error = "Seerr redirected the login request. Verify the Seerr URL in Moonshot matches its public address (https and any sub-path)."
                 };
             }
 
@@ -404,9 +404,9 @@ public class SeerrSessionService
               if (!response.IsSuccessStatusCode)
               {
                   var errorBody = await response.Content.ReadAsStringAsync();
-                  _logger.LogWarning("Luna bootstrap failed for Jellyfin user {UserId}: {Status} - {Error}",
+                  _logger.LogWarning("Moonshot bootstrap failed for Jellyfin user {UserId}: {Status} - {Error}",
                       userId, response.StatusCode, errorBody);
-                  return new SeerrAuthResult { Success = false, Error = "Luna bootstrap failed" };
+                  return new SeerrAuthResult { Success = false, Error = "Moonshot bootstrap failed" };
               }
 
               var sessionCookie = ReadSessionCookie(response, cookieContainer, seerrUrl);
@@ -444,7 +444,7 @@ public class SeerrSessionService
           }
           catch (Exception ex)
           {
-              _logger.LogError(ex, "Unexpected error during Luna bootstrap for Jellyfin user {UserId}", userId);
+              _logger.LogError(ex, "Unexpected error during Moonshot bootstrap for Jellyfin user {UserId}", userId);
               return new SeerrAuthResult { Success = false, Error = "An unexpected error occurred" };
           }
       }

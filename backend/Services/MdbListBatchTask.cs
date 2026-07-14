@@ -23,7 +23,7 @@ public class MdbListBatchTask : IScheduledTask
     public string Name => "Moonshot MDBList Ratings Sync";
     public string Key => "Moonfin.MdbList.BatchSync";
     public string Description => "Batch-fetches MDBList ratings for all movies and shows in the library. Only fetches items not already cached.";
-    public string Category => "Moonfin";
+    public string Category => "Moonshot";
 
     private const int ApiBatchSize = 100;
     private const int LibraryPageSize = 2000;
