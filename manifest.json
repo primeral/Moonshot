@@ -6,8 +6,17 @@
     "description": "Moonshot is a server plugin for Jellyfin, powering settings sync, the Moonshot Web app through the legacy-compatible /Moonfin/Web/ route, a built-in theme editor, media bar and ratings integrations, and Seerr proxy/SSO with admin defaults and broadcasts across Moonshot clients.",
     "owner": "RadicalMuffinMan",
     "category": "General",
-    "imageUrl": "https://raw.githubusercontent.com/Moonfin-Client/Plugin/master/backend/assets/logo.png",
+    "imageUrl": "https://raw.githubusercontent.com/primeral/Moonshot/moonshot-jellyfin-12-rc2/backend/assets/logo.png",
     "versions": [
+      {
+        "version": "1.9.1.3",
+        "changelog": "## Moonshot alpha\n\n- Added Jellyfin 12 RC2 and .NET 10 compatibility.\n- Rebranded the product-facing plugin identity from Moonfin/Moonbase to Moonshot.\n- Preserved legacy-compatible Moonfin routes, configuration paths, GUID, assembly name, and task keys.\n- Added Seerr session bootstrap and Moonshot runtime branding.\n- Validated File Transformation integration on Jellyfin 12 RC2.",
+        "targetAbi": "12.0.0.0",
+        "sourceUrl": "https://github.com/primeral/Moonshot/releases/download/1.9.1.3/Moonfin.Server-1.9.1.3.zip",
+        "checksum": "14064F6A1F9AD2F7ABBFF2AD5EDE89C9",
+        "timestamp": "2026-07-14T01:30:34",
+        "dependencies": []
+      },
       {
         "version": "1.9.1.0",
         "changelog": "Features:\n\n- The web theme editor gained a random theme generator that builds a complete, coherent palette from a random base and accent hue, while keeping your theme id, name, and description. The theme id validation message was also clarified.\n\nBug Fixes:\n\n- Media Bar trailers on web were reworked so YouTube trailer playback and advancing to the next slide now work correctly.\n- Web playback sessions are now reported as stopped when you close or navigate away from the browser tab, using a page exit beacon, so they no longer linger as active on the server.\n- The sidebar now follows desktop behavior in desktop browsers, instead of using the mobile layout.\n- Preferences are now parsed and type coerced more robustly for web compatibility, fixing settings that could fail to load or save when stored as browser strings.\n- The refresh rate switching and audio output mode settings are now hidden on the web build, where they do not apply.\n- ASS and PGS subtitles now render correctly on web, with the necessary fonts bundled.",
@@ -28,7 +37,7 @@
       },
       {
         "version": "1.8.2.0",
-        "changelog": "## Features\n\n- Added Media Bar Enhanced support in desktop media bar settings. (#98)\n- Clicking a row item now navigates to the correct library, and playback from the Continue Watching row works properly again. (#60)\n\n## Bug Fixes\n\n- Details page buttons were too large on some screens — they've been resized to something more reasonable. (#100)\n- Clicking items from third-party home screen section plugins no longer incorrectly triggers Moonfin's custom detail page. (#96)\n- Admin default settings now correctly propagate to existing users when changed. (#101)\n- The Jellyseerr discover page was crashing to an error screen because the proxy was wrapping responses in an unexpected JSON envelope. That's fixed now. (#108)\n- The global profile now saves reliably, the media bar state persists correctly across Moonfin and Paradox themes, and users no longer see genres or library sections they don't have access to. (#87)",
+        "changelog": "## Features\n\n- Added Media Bar Enhanced support in desktop media bar settings. (#98)\n- Clicking a row item now navigates to the correct library, and playback from the Continue Watching row works properly again. (#60)\n\n## Bug Fixes\n\n- Details page buttons were too large on some screens \u2014 they've been resized to something more reasonable. (#100)\n- Clicking items from third-party home screen section plugins no longer incorrectly triggers Moonfin's custom detail page. (#96)\n- Admin default settings now correctly propagate to existing users when changed. (#101)\n- The Jellyseerr discover page was crashing to an error screen because the proxy was wrapping responses in an unexpected JSON envelope. That's fixed now. (#108)\n- The global profile now saves reliably, the media bar state persists correctly across Moonfin and Paradox themes, and users no longer see genres or library sections they don't have access to. (#87)",
         "targetAbi": "10.10.0.0",
         "sourceUrl": "https://github.com/Moonfin-Client/Plugin/releases/download/1.8.2/Moonfin.Server-1.8.2.0.zip",
         "checksum": "C559FB46DFE70DD27F151FB928D2F604",

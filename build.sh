@@ -14,7 +14,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKEND_DIR="$ROOT_DIR/backend"
 FRONTEND_DIR="$ROOT_DIR/frontend"
 
-echo "Building Moonfin v${VERSION} for Jellyfin ${TARGET_ABI}..."
+echo "Building Moonshot v${VERSION} for Jellyfin ${TARGET_ABI}..."
 echo "Build Time: ${BUILD_TIMESTAMP}"
 
 # Resolve dotnet binary (PATH first, then local user install)
@@ -114,13 +114,15 @@ if [ -f "$MANIFEST_FILE" ]; then
            '.[0].versions[0].version = $ver |
             .[0].versions[0].targetAbi = $abi |
             .[0].versions[0].checksum = $sum |
-            .[0].versions[0].timestamp = $time' \
+            .[0].versions[0].timestamp = $time |
+            .[0].versions[0].sourceUrl = ("https://github.com/primeral/Moonshot/releases/download/" + $ver + "/Moonfin.Server-" + $ver + ".zip")' \
            "$MANIFEST_FILE" > "${MANIFEST_FILE}.tmp" && mv "${MANIFEST_FILE}.tmp" "$MANIFEST_FILE"
         echo "Updated manifest.json with new checksum and version"
     else
-        sed -i.bak -E "s/\"version\": \"[^\"]+\"/\"version\": \"$VERSION\"/" "$MANIFEST_FILE"
-        sed -i.bak -E "s/\"checksum\": \"[^\"]+\"/\"checksum\": \"$CHECKSUM\"/" "$MANIFEST_FILE"
-        sed -i.bak -E "s/\"timestamp\": \"[^\"]+\"/\"timestamp\": \"$TIMESTAMP\"/" "$MANIFEST_FILE"
+        sed -i.bak -E "0,/\"version\": \"[^\"]+\"/s//\"version\": \"$VERSION\"/" "$MANIFEST_FILE"
+        sed -i.bak -E "0,/\"checksum\": \"[^\"]+\"/s//\"checksum\": \"$CHECKSUM\"/" "$MANIFEST_FILE"
+        sed -i.bak -E "0,/\"timestamp\": \"[^\"]+\"/s//\"timestamp\": \"$TIMESTAMP\"/" "$MANIFEST_FILE"
+        sed -i.bak -E "0,|\"sourceUrl\": \"[^\"]+\"|s||\"sourceUrl\": \"https://github.com/primeral/Moonshot/releases/download/$VERSION/Moonfin.Server-$VERSION.zip\"|" "$MANIFEST_FILE"
         rm -f "${MANIFEST_FILE}.bak"
         echo "Updated manifest.json with new checksum and version (using sed)"
     fi
