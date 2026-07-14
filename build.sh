@@ -67,7 +67,7 @@ cat > "$RELEASE_DIR/meta.json" <<EOF
 {
   "category": "General",
   "changelog": "",
-  "description": "Moonshot brings a modern TV-style UI to Jellyfin web. Features include: custom navbar, media bar with featured content, Jellyseerr integration, and cross-device settings synchronization.",
+  "description": "Moonshot, a fork of Moonbase, further improves upon Seerr integration.",
   "guid": "${PLUGIN_GUID}",
   "name": "Moonshot",
   "overview": "Moonshot UI and settings sync for Jellyfin",
