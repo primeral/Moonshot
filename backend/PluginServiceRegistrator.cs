@@ -17,7 +17,7 @@ public class PluginServiceRegistrator : IPluginServiceRegistrator
         serviceCollection.AddSingleton<MoonfinThemeValidator>();
         serviceCollection.AddSingleton<MoonfinThemeStore>();
         serviceCollection.AddSingleton<SeerrSessionService>();
-        serviceCollection.AddSingleton<LunaJellyfinUserResolver>();
+        serviceCollection.AddSingleton<MoonshotJellyfinUserResolver>();
         serviceCollection.AddSingleton<MdbListCacheService>();
         serviceCollection.AddHttpClient();
 

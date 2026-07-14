@@ -358,11 +358,11 @@ public class SeerrSessionService
     }
 
       /// <summary>
-      /// LUNA-PROVENANCE: New Luna method based on AuthenticateAsync cookie capture.
+      /// MOONSHOT-PROVENANCE: New Moonshot method based on AuthenticateAsync cookie capture.
       /// It converts a Jellyfin-authenticated identity into a stored Seerr session by
-      /// calling Seerr QC+/Luna /api/v1/auth/jellyfin/luna/bootstrap.
+      /// calling Seerr+QC/Moonshot /api/v1/auth/jellyfin/luna/bootstrap.
       /// </summary>
-      public async Task<SeerrAuthResult?> BootstrapWithLunaAsync(Guid userId, string jellyfinUsername)
+      public async Task<SeerrAuthResult?> BootstrapWithMoonshotAsync(Guid userId, string jellyfinUsername)
       {
           var config = MoonfinPlugin.Instance?.Configuration;
           var seerrUrl = config?.GetEffectiveSeerrUrl();
@@ -388,7 +388,7 @@ public class SeerrSessionService
               };
               using var client = new HttpClient(handler);
               client.Timeout = TimeSpan.FromSeconds(15);
-              client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Luna-Server");
+              client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Moonshot-Server");
               client.DefaultRequestHeaders.TryAddWithoutValidation("X-API-Key", seerrApiKey);
 
               var payload = new

@@ -19,20 +19,20 @@ namespace Moonfin.Server.Api;
 public class SeerrProxyController : ControllerBase
 {
     private readonly SeerrSessionService _sessionService;
-    private readonly LunaJellyfinUserResolver _lunaUserResolver;
+    private readonly MoonshotJellyfinUserResolver _lunaUserResolver;
 
-    public SeerrProxyController(SeerrSessionService sessionService, LunaJellyfinUserResolver lunaUserResolver)
+    public SeerrProxyController(SeerrSessionService sessionService, MoonshotJellyfinUserResolver lunaUserResolver)
     {
         _sessionService = sessionService;
         _lunaUserResolver = lunaUserResolver;
     }
 
     /// <summary>
-    /// LUNA-PROVENANCE:
-    /// Source pattern: existing Moonfin Seerr status/login endpoints plus LunaJellyfinUserResolver.
+    /// MOONSHOT-PROVENANCE:
+    /// Source pattern: existing Moonfin Seerr status/login endpoints plus MoonshotJellyfinUserResolver.
     /// Reason: first non-invasive bootstrap probe; verifies Jellyfin-authenticated identity
     /// before adding Seerr server-to-server session bootstrap.
-    /// Change type: new Luna endpoint stub.
+    /// Change type: new Moonshot endpoint stub.
     /// </summary>
     [HttpPost("Bootstrap")]
     [Authorize]
@@ -59,7 +59,7 @@ public class SeerrProxyController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Unable to resolve Jellyfin username" });
         }
 
-        var result = await _sessionService.BootstrapWithLunaAsync(userId.Value, jellyfinUsername);
+        var result = await _sessionService.BootstrapWithMoonshotAsync(userId.Value, jellyfinUsername);
         if (result == null || !result.Success)
         {
             return Unauthorized(new

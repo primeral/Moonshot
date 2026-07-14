@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Http;
 namespace Moonfin.Server.Services;
 
 /// <summary>
-/// LUNA-PROVENANCE:
+/// MOONSHOT-PROVENANCE:
 /// Source pattern: Moonfin.Server.Api.ControllerExtensions.GetUserIdFromClaims and
 /// Moonfin.Server.Api.MoonfinController ResolveQueryUser/GetAllServerUserIds helpers.
-/// Reason: Luna needs a reusable, controller-independent way to resolve the currently
+/// Reason: Moonshot needs a reusable, controller-independent way to resolve the currently
 /// authenticated Jellyfin user for Seerr session bootstrap.
 /// Change type: extracted/adapted from existing Moonfin plugin patterns; no private project
 /// branding or deployment-specific assumptions.
 /// </summary>
-public sealed class LunaJellyfinUserResolver
+public sealed class MoonshotJellyfinUserResolver
 {
     private static readonly Type? UserManagerType =
         Type.GetType("MediaBrowser.Controller.Library.IUserManager, MediaBrowser.Controller");
